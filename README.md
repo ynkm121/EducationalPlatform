@@ -1,4 +1,4 @@
-# studentPlatform
+# EducationalPlatform 
 
 # 介绍
 此项目为巩固springboot基础而作，无参照项目，编码风格沿袭[myBlog](https://github.com/ynkm121/myBlog)
