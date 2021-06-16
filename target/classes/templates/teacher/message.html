@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="teacher/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <header th:replace="teacher/header::header-nav"></header>
+
+    <header th:replace="teacher/sidebar::sidebar-fragment(${path})"></header>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <div hidden>
+            <input type="hidden" th:value="${session.teacherId}" id="websocketTeacherId">
+        </div>
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <h1 class="m-0">首页</h1>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">发布消息</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- 几个基础的输入框，名称、分类等输入框 -->
+                        <form id="messageForm" onsubmit="return false;">
+                            <div class="form-group" style="display:flex;">
+                                <select class="form-control row-cols-6" id="courseId" name="courseId">
+                                    <option  th:each="course:${courses}" th:value="${course.getCourseId()}" th:text="${course.getCourseName()}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <!-- textarea -->
+                                    <div class="form-group">
+                                        <label>消息详情</label>
+                                        <textarea name="message" id="message" class="form-control" rows="3" placeholder="请输入消息 ..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!-- 按钮 -->
+                                &nbsp;<button class="btn btn-info float-right" style="margin-left: 5px;"
+                                              id="confirmButton">发布消息
+                            </button>&nbsp;
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<!-- SweetAlert2-->
+<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/dist/js/public.js}"></script>
+<script th:src="@{/plugins/websocket/sockjs.js}"></script>
+<script th:src="@{/plugins/websocket/stomp.js}"></script>
+<script th:src="@{/dist/js/teacher/message.js}"></script>
+</body>
+</html>

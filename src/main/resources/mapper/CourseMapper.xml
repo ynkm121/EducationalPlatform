@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.dao.CourseMapper">
+  <resultMap id="BaseResultMap" type="Course">
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="relation_teacher_id" jdbcType="INTEGER" property="relationTeacherId" />
+    <result column="prerequisite" jdbcType="VARCHAR" property="prerequisite" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+    <result column="credit" jdbcType="INTEGER" property="credit" />
+    <result column="remain" jdbcType="INTEGER" property="remain" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="BaseList">
+  course_id, course_name, relation_teacher_id, prerequisite, intro, credit, remain, is_deleted, create_time
+  </sql>
+  <insert id="insert" parameterType="Course" useGeneratedKeys="true" keyProperty="courseId">
+    insert into course (
+      course_name, relation_teacher_id, prerequisite,  intro, credit, remain
+    )
+    values (#{courseName,jdbcType=VARCHAR}, #{relationTeacherId}, #{prerequisite} ,#{intro,jdbcType=VARCHAR},
+      #{credit,jdbcType=INTEGER}, #{remain,jdbcType=INTEGER})
+  </insert>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+    select
+        <include refid="BaseList"/>
+    from course
+    where is_deleted = 0
+      <if test="teacherId != null">
+        and relation_teacher_id = #{teacherId}
+      </if>
+    <if test="limit != null and page != null">
+      limit #{limit} offset #{start}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+        <include refid="BaseList"/>
+    from course
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByTeacherId" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="BaseList" />
+    from course
+    where relation_teacher_id = #{teacherId}
+    and is_deleted = 0
+  </select>
+  <select id="selectUncheckedbyCourseId" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="BaseList" />
+    from course
+    where is_deleted = 0 and course_id not in
+    <foreach collection="list" separator="," open="(" close=")" item="courseId">
+      #{courseId}
+    </foreach>
+
+  </select>
+  <select id="selectCount" parameterType="map" resultType="int">
+    select count(*)
+    from course
+    where is_deleted = 0
+    <if test="teacherId != null">
+      and relation_teacher_id = #{teacherId}
+    </if>
+    <if test="page != null and limit != null">
+      limit #{limit} offset #{start}
+    </if>
+  </select>
+  <update id="updateSelective" parameterType="Course">
+    update course
+    <set>
+      <if test="courseName != null">
+        course_name = #{courseName},
+      </if>
+      <if test="relationTeacherId != null">
+        relation_teacher_id = #{relationTeacherId},
+      </if>
+      prerequisite = #{prerequisite},
+      <if test="intro != null">
+        intro = #{intro},
+      </if>
+      <if test="credit != null">
+        credit = #{credit},
+      </if>
+      <if test="remain != null">
+        remain = #{remain},
+      </if>
+    </set>
+    where course_id = #{courseId}
+  </update>
+  <update id="BatchDelete">
+    update course
+    set is_deleted = 1
+    where course.course_id in
+    <foreach collection="array" item="courseId" open="(" close=")" separator=",">
+      #{courseId}
+    </foreach>
+  </update>
+</mapper>

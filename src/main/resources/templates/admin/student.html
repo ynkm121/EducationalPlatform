@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <header th:replace="admin/header::header-nav"></header>
+
+    <header th:replace="admin/sidebar::sidebar-fragment(${path})"></header>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <h1 class="m-0">学生信息</h1>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-pills ml-auto p-2">
+                        <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">已注册</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">未注册</a></li>
+                    </ul>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="grid-btn">
+                                <button class="btn btn-success ml-2 mb-3" onclick="addStudent()"><i
+                                        class="fa fa-plus"></i>&nbsp;新增
+                                </button>
+                                <button class="btn btn-info ml-2 mb-3" onclick="editStudent()"><i
+                                        class="fa fa-edit"></i>&nbsp;修改
+                                </button>
+                                <button class="btn btn-danger ml-2 mb-3" onclick="deleteStudent()"><i
+                                        class="fa fa-minus"></i>&nbsp;删除
+                                </button>&nbsp;&nbsp;
+                            </div>
+                            <!-- JqGrid必要DOM,用于创建表格展示列表数据 -->
+                            <table id="jqGrid" class="table table-bordered"></table>
+                            <!-- JqGrid必要DOM,分页信息区域 -->
+                            <div id="jqGridPager"></div>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_2">
+                            <div class="grid-btn">
+                                <button class="btn btn-success ml-2 mb-3" onclick="confirmRegist()"><i
+                                        class="fa fa-plus"></i>&nbsp;确认注册
+                                </button>
+                            </div>
+                            <!-- JqGrid必要DOM,用于创建表格展示列表数据 -->
+                            <table id="jqGridRegister" class="table table-bordered"></table>
+                            <!-- JqGrid必要DOM,分页信息区域 -->
+                            <div id="jqGridPagerRegister"></div>
+                        </div>
+                        <!-- /.tab-pane -->
+                    </div>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </section>
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-labelledby="studentModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="categoryModalLabel">学生信息</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="studentForm">
+                            <div class="form-group">
+                                <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                    错误信息展示栏。
+                                </div>
+                            </div>
+                            <input type="hidden" class="form-control" id="studentId" name="studentId">
+                            <div class="form-group">
+                                <label class="control-label">学生名称:</label>
+                                <input type="text" class="form-control" id="studentName" name="studentName"
+                                       placeholder="请输入学生名称" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">所属院系:</label>
+                                <select class="form-control" id="departmentName" name="departmentName">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">学生年级:</label>
+                                <select class="form-control" id="studentGrade" name="studentGrade">
+                                    <option selected value="1">大一</option>
+                                    <option value="2">大二</option>
+                                    <option value="3">大三</option>
+                                    <option value="4">大四</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">登陆密码:</label>
+                                <input type="number" class="form-control" id="password" name="password"
+                                       placeholder="请输入登陆密码" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄:</label>
+                                <input type="number" class="form-control" id="age" name="age"
+                                       placeholder="请输入年龄" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">性别:</label>
+                                <select class="form-control" id="sex" name="sex">
+                                    <option selected value="0">男</option>
+                                    <option value="1">女</option>
+                                </select>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="saveButton">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+    </div>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/plugins/jquery-knob/jquery.knob.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<!-- SweetAlert2-->
+<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jqgrid -->
+<script th:src="@{/plugins/jqgrid-5.3.0/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/plugins/jqgrid-5.3.0/grid.locale-cn.js}"></script>
+<script th:src="@{/dist/js/admin/student.js}"></script>
+<script th:src="@{/dist/js/public.js}"></script>
+</body>
+</html>

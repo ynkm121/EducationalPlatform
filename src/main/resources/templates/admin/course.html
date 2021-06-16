@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <header th:replace="admin/header::header-nav"></header>
+
+    <header th:replace="admin/sidebar::sidebar-fragment(${path})"></header>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <h1 class="m-0">课程信息</h1>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">全部课程</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="grid-btn">
+                        <button class="btn btn-success ml-2 mb-3" onclick="addCourse()"><i
+                                class="fa fa-plus"></i>&nbsp;新增
+                        </button>
+                        <button class="btn btn-info ml-2 mb-3" onclick="editCourse()"><i
+                                class="fa fa-edit"></i>&nbsp;修改
+                        </button>
+                        <button class="btn btn-danger ml-2 mb-3" onclick="deleteCourse()"><i
+                                class="fa fa-minus"></i>&nbsp;删除
+                        </button>&nbsp;&nbsp;
+                    </div>
+                    <!-- JqGrid必要DOM,用于创建表格展示列表数据 -->
+                    <table id="jqGrid" class="table table-bordered"></table>
+                    <!-- JqGrid必要DOM,分页信息区域 -->
+                    <div id="jqGridPager"></div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </section>
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="categoryModalLabel">课程信息</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="courseForm">
+                            <div class="form-group">
+                                <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                    错误信息展示栏。
+                                </div>
+                            </div>
+                            <input type="hidden" class="form-control" id="courseId" name="courseId">
+                            <div class="form-group">
+                                <label class="control-label">课程名称:</label>
+                                <input type="text" class="form-control" id="courseName" name="courseName"
+                                       placeholder="请输入课程名称" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">任课教师:</label>
+                                <select class="form-control" id="teacherName" name="teacherName">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">先修课:</label>
+                                <select class="form-control" id="prerequisite" name="prerequisite" multiple>
+                                    <option selected value="0">无</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">课程简介:</label>
+                                <input type="text" class="form-control" id="intro" name="intro"
+                                       placeholder="请输入课程简介" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">学分:</label>
+                                <input type="number" class="form-control" id="credit" name="credit"
+                                       placeholder="请输入学分" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">课堂容量:</label>
+                                <input type="number" class="form-control" id="remain" name="remain"
+                                       placeholder="请输入课堂容量" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="saveButton">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal -->
+        <!-- /.content -->
+    </div>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/plugins/jquery-knob/jquery.knob.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<!-- SweetAlert2-->
+<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jqgrid -->
+<script th:src="@{/plugins/jqgrid-5.3.0/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/plugins/jqgrid-5.3.0/grid.locale-cn.js}"></script>
+<script th:src="@{/dist/js/public.js}"></script>
+<script th:src="@{/dist/js/admin/course.js}"></script>
+</body>
+</html>

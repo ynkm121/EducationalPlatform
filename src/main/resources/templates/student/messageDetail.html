@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<header th:replace="student/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <header th:replace="student/header::header-nav"></header>
+
+  <header th:replace="student/sidebar::sidebar-fragment(${path})"></header>
+
+  <section class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <h1 class="m-0">消息详情</h1>
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="card card-primary card-outline">
+            <div class="card-body p-0">
+              <div class="mailbox-read-info">
+                <h6>科目: <span th:text="${message.getCourseName()}"></span></h6>
+                <h6>教师: <span th:text="${message.getTeacherName()}"></span>
+                  <span class="mailbox-read-time float-right" th:text="${message.getGapTime()}">15 Feb. 2015 11:03 PM</span></h6>
+              </div>
+              <!-- /.mailbox-read-info -->
+              <div class="mailbox-read-message font-weight-bold" th:text="${message.getMessageBody()}">
+
+              </div>
+              <!-- /.mailbox-read-message -->
+              <div class="card-footer">
+                <div class="float-left">
+                  <button type="button" class="btn btn-default" id="back"><i class="fas fa-reply"></i> 返回</button>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        <!-- /.card-footer -->
+      </div>
+    </div>
+  </section>
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      Anything you want
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2014-2021 <a th:href="@{/student/index}">教学信息管理系统</a>.</strong> All rights reserved.
+  </footer>
+</div>
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<script>
+  $('#back').click(function (){
+    window.location.href = '/student/message';
+  })
+</script>
+</body>
+</html>

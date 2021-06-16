@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="student/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <header th:replace="student/header::header-nav"></header>
+
+    <header th:replace="student/sidebar::sidebar-fragment(${path})"></header>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <h1 class="m-0">个人信息</h1>
+            </div><!-- /.container-fluid -->
+        </div>
+        <div class="content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-text-width"></i>
+                        信息一览
+                    </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row row-cols-md-2">
+                        <div class="callout callout-info mt-3">
+                            <h5>学生姓名</h5>
+                            <p class="text-info" th:text="${student.getStudentName()}">张老三</p>
+                        </div>
+                        <div class="callout callout-info mt-3">
+                            <h5>学生年级</h5>
+                            <div th:switch="${student.getStudentGrade()}">
+                                <p class="text-info" th:case="1">大一</p>
+                                <p class="text-info" th:case="2">大二</p>
+                                <p class="text-info" th:case="3">大三</p>
+                                <p class="text-info" th:case="4">大四</p>
+                            </div>
+                        </div>
+                        <div class="callout callout-info">
+                            <h5>密码</h5>
+                            <p class="text-info" th:text="${student.getPassword()}">123456</p>
+                        </div>
+                        <div class="callout callout-info">
+                            <h5>年龄</h5>
+                            <p class="text-info" th:text="${student.getAge()}">20</p>
+                        </div>
+                        <div class="callout callout-info">
+                            <h5>性别</h5>
+                            <p class="text-info" th:text="${student.getSex() == 0 ? '男' : '女'}">男</p>
+                        </div>
+                        <div class="callout callout-info">
+                            <h5>系别</h5>
+                            <p class="text-info" th:text="${student.getDepartmentName()}">计算机系</p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <h1>你好</h1>
+</div>
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<!-- ChartJS -->
+<script th:src="@{/plugins/chart.js/Chart.min.js}"></script>
+<!-- Sparkline -->
+<script th:src="@{/plugins/sparklines/sparkline.js}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script th:src="@{/dist/js/pages/dashboard.js}"></script>
+</body>
+</html>

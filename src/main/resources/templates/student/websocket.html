@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <input type="hidden" th:value="${session.studentId}" id="websocketStudentId">
+    <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+    <script th:src="@{/plugins/websocket/sockjs.js}"></script>
+    <script th:src="@{/plugins/websocket/stomp.js}"></script>
+    <script th:src="@{/dist/js/student/websocket.js}"></script>
+</body>
+</html>

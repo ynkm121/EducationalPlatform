@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.dao.CoursewareMapper" >
+  <resultMap id="BaseResultMap" type="com.liu.entity.Courseware" >
+    <result column="course_id" property="courseId" jdbcType="INTEGER" />
+    <result column="courseware_intro" property="coursewareIntro" jdbcType="VARCHAR" />
+    <result column="courseware_url" property="coursewareUrl" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.liu.entity.Courseware" >
+    insert into courseware
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="coursewareIntro != null">
+        courseware_intro,
+      </if>
+      <if test="coursewareUrl != null">
+        courseware_url,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        #{courseId},
+      </if>
+      <if test="coursewareIntro != null">
+        #{coursewareIntro},
+      </if>
+      <if test="coursewareUrl != null">
+        #{coursewareUrl},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select course_id, courseware_intro, courseware_url, create_time, update_time
+    from courseware
+    where is_deleted = 0
+  </select>
+  <select id="selectByCourseId" resultMap="BaseResultMap" parameterType="map">
+    select courseware_intro, courseware_url, create_time, update_time
+    from courseware
+    where is_deleted = 0
+      <if test="courseId != null">
+        and course_id = #{courseId}
+      </if>
+    <if test="page != null and limit != null">
+      limit #{limit} offset #{start}
+    </if>
+  </select>
+  <select id="selectCount" resultType="int" parameterType="map">
+    select count(*)
+    from courseware
+    where is_deleted = 0
+    <if test="page != null and limit != null">
+      limit #{limit} offset #{start}
+    </if>
+  </select>
+</mapper>

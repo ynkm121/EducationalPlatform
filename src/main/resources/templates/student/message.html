@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="student/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <header th:replace="student/header::header-nav"></header>
+
+    <header th:replace="student/sidebar::sidebar-fragment(${path})"></header>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <h1 class="m-0">消息一览</h1>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline" id="messageForm">
+                    <div class="card-header">
+                        <h3 class="card-title">消息栏</h3>
+                        <div class="card-tools col-sm-3 float-right ml-3">
+                            <div class="input-group input-group-sm">
+                                <select class="form-control" id="courses" onchange="sortCourse()">
+                                    <option value="0">===筛选课程===</option>
+                                    <option th:each="course:${courses}" th:value="${course.getCourseId()}" th:text="${course.getCourseName()}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.card-tools -->
+                    </div>
+                    <div th:replace="student/messageForm::messageForm"></div>
+
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<!-- SweetAlert2-->
+<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/dist/js/public.js}"></script>
+<script th:src="@{/dist/js/student/message.js}"></script>
+</body>
+</html>

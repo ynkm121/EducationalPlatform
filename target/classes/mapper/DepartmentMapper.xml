@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.dao.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="Department" >
+    <id column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from department
+    where department_id = #{departmentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Department" >
+    insert into department (department_id, department_name, create_time
+      )
+    values (#{departmentId,jdbcType=INTEGER}, #{departmentName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Department" >
+    update department
+    set department_name = #{departmentName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where department_id = #{departmentId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select department_id, department_name, create_time
+    from department
+    where department_id = #{departmentId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select department_id, department_name, create_time
+    from department
+  </select>
+  <select id="selectByDepartName" parameterType="string" resultMap="BaseResultMap">
+    select department_id, department_name, create_time
+    from department
+    where department_name = #{departmentName}
+  </select>
+</mapper>

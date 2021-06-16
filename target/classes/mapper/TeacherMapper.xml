@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.dao.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="Teacher" >
+    <id column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="is_regist" property="isRegist" jdbcType="TINYINT" />
+    <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="Teacher" >
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teacherId != null" >
+        teacher_id,
+      </if>
+      <if test="teacherName != null" >
+        teacher_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="isRegist != null" >
+        is_regist,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="loginTime != null" >
+        login_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=BIGINT},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="isRegist != null" >
+        #{isRegist,jdbcType=TINYINT},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Teacher" >
+    update teacher
+    set teacher_name = #{teacherName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      is_regist = #{isRegist,jdbcType=TINYINT},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select teacher_id, teacher_name, password, is_regist, is_delete, login_time, create_time
+    from teacher
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByTeacherName" parameterType="string" resultMap="BaseResultMap">
+    select *
+    from teacher
+    where is_regist = 1 and is_delete = 0 and teacher_name = #{teacherName}
+  </select>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap" >
+    select teacher_id, teacher_name, password, is_regist, login_time, create_time
+    from teacher
+    where is_regist =
+      <choose>
+        <when test="isRegist != null">
+          #{isRegist}
+        </when>
+        <otherwise>
+          1
+        </otherwise>
+      </choose>
+    and is_delete = 0
+    <if test="page != null and limit != null">
+      limit #{limit} offset #{start}
+    </if>
+  </select>
+  <select id="getCount" parameterType="map" resultType="int">
+    select count(*)
+    from teacher
+    where is_regist =
+        <choose>
+          <when test="isRegist != null">
+            #{isRegist}
+          </when>
+          <otherwise>
+            1
+          </otherwise>
+        </choose>
+      and is_delete = 0
+    <if test="page != null and limit != null">
+      limit #{limit} offset #{start}
+    </if>
+  </select>
+  <update id="BatchDelete" parameterType="int">
+    update teacher
+    set is_delete = 1
+    where teacher_id in
+    <foreach collection="array" item="teacherId" open="(" close=")" separator=",">
+      #{teacherId}
+    </foreach>
+  </update>
+  <update id="BatchConfirm" parameterType="int">
+    update teacher
+    set is_regist = 1
+    where teacher_id in
+    <foreach collection="array" item="teacherId" open="(" close=")" separator=",">
+      #{teacherId}
+    </foreach>
+  </update>
+</mapper>

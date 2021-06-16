@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.dao.CourseRelationMapper" >
+  <resultMap id="BaseResultMap" type="CourseRelation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="course_id" property="courseId" jdbcType="INTEGER" />
+    <result column="student_id" property="studentId" jdbcType="BIGINT" />
+    <result column="relation_teacher_id" property="relationTeacherId" jdbcType="INTEGER" />
+    <result column="student_score" property="studentScore" jdbcType="FLOAT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="selectByStudentId" parameterType="map" resultMap="BaseResultMap">
+    select course_id, relation_teacher_id, student_score
+    from course_relation
+    where student_id = #{studentId}
+    <if test="limit != null and page != null">
+      limit #{limit} offset #{start}
+    </if>
+  </select>
+  <select id="selectByCourseId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select student_id, relation_teacher_id, student_score
+    from course_relation
+    where course_id = #{id,jdbcType=INTEGER} and student_score = -1.0
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select course_id, student_id, relation_teacher_id, student_score, create_time
+    from course_relation
+  </select>
+  <select id="selectCountSelective" parameterType="map" resultType="int">
+    select count(*)
+    from course_relation
+    <where>
+      <if test="studentId != null">
+        student_id = #{studentId}
+      </if>
+      <if test="courseId != null">
+        and course_id = #{courseId}
+      </if>
+      <if test="teacherId != null">
+        and relation_teacher_id = #{teacherId}
+      </if>
+      <if test="courseScore != null">
+        and course_score = #{course_score}
+      </if>
+    </where>
+  </select>
+  <select id="selectByStudentIdAndCourseId" resultMap="BaseResultMap">
+    select *
+    from course_relation
+    where student_id = #{studentId} and course_id = #{courseId}
+  </select>
+  <select id="selectForScalePages" parameterType="map" resultMap="BaseResultMap">
+    select *
+    from course_relation
+    where relation_teacher_id = #{teacherId} and course_id = #{courseId} and student_score = -1.0
+    <if test="page != null and limit != null">
+      limit #{limit} offset #{start}
+    </if>
+  </select>
+  <insert id="BatchInsert" parameterType="CourseRelation">
+    insert into course_relation (course_id, student_id, relation_teacher_id)
+    values 
+        <foreach collection="list" item="item" separator=",">
+            (#{item.courseId}, #{item.studentId}, #{item.relationTeacherId})
+        </foreach>
+  </insert>
+  <update id="updateScale">
+    update course_relation
+    set student_score = #{studentScore}
+    where student_id = #{studentId} and course_id = #{courseId};
+  </update>
+</mapper>

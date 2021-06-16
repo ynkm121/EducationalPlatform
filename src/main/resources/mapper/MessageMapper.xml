@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.dao.MessageMapper" >
+  <resultMap id="BaseResultMap" type="Message" >
+    <id column="message_id" property="messageId" jdbcType="INTEGER" />
+    <result column="course_id" property="courseId" jdbcType="INTEGER" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="message_body" property="messageBody" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="BaseList">
+    message_id, course_id, teacher_id, message_body, create_time
+  </sql>
+  <insert id="insertSelective" parameterType="Message" >
+    insert into message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="messageId != null">
+            message_id,
+          </if>
+          <if test="courseId != null">
+            course_id,
+          </if>
+          <if test="teacherId != null">
+            teacher_id,
+          </if>
+          <if test="createTime != null">
+            create_time,
+          </if>
+          <if test="messageBody != null">
+            message_body
+          </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+          <if test="messageId != null">
+            #{messageId},
+          </if>
+          <if test="courseId != null">
+            #{courseId},
+          </if>
+          <if test="teacherId != null">
+            #{teacherId},
+          </if>
+          <if test="createTime != null">
+            #{createTime},
+          </if>
+          <if test="messageBody != null">
+            #{messageBody}
+          </if>
+        </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Message" >
+    update message
+    set course_id = #{courseId,jdbcType=INTEGER},
+      teacher_id = #{teacherId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      message_body = #{messageBody,jdbcType=LONGVARCHAR}
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+        <include refid="BaseList"/>
+    from message
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCourseId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+        <include refid="BaseList"/>
+    from message
+    where course_id = #{courseId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+        <include refid="BaseList"/>
+    from message
+  </select>
+</mapper>

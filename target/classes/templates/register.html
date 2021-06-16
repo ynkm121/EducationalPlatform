@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>网络教学信息系统</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+  <!-- Theme style -->
+  <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+  <link rel="stylesheet" th:href="@{/plugins/jqgrid-5.3.0/ui.jqgrid-bootstrap4.css}"/>
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" th:href="@{/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
+
+
+  <style type="text/css">
+    .student {
+      display: block;
+    }
+
+    .teacher {
+      display: none;
+    }
+  </style>
+
+</head>
+
+<body class="hold-transition register-page">
+  <div class="register-box">
+    <div class="register-logo">
+      <a href="#">网络教学信息系统</a>
+    </div>
+
+    <div class="card">
+      <div class="card-body register-card-body">
+        <p class="login-box-msg">注册新用户</p>
+        <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+          错误信息展示栏。
+        </div>
+        <div class="form-group" data-select2-id="29">
+          <label>角色</label>
+          <select id="test" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;"
+            data-select2-id="17" tabindex="-1" aria-hidden="true">
+            <option selected="selected" data-select2-id="19" value="1">学生</option>
+            <option data-select2-id="35" value="2">老师</option>
+          </select>
+        </div>
+
+<!--        学生-->
+        <form class="student" id="studentForm">
+          <div class="input-group mb-3">
+            <input name="studentName"  type="text" class="form-control" placeholder="姓名" id="studentName">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3 has-error">
+            <input name="studentId"  type="text" class="form-control" placeholder="请输入11位学号" id="studentId">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input name="studentPwd"  type="password" class="form-control" placeholder="密码" id="studentPwd">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="重新输入密码" id="studentPwdRe">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <input name="age" type="text" class="form-control" placeholder="请输入年龄" id="age">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <select name="sex" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;"
+              data-select2-id="17" tabindex="-1" aria-hidden="true">
+              <option selected="selected" data-select2-id="19" value="0">男</option>
+              <option data-select2-id="35" value="1">女</option>
+            </select>
+          </div>
+
+          <div class="input-group mb-3">
+            <select name="studentDepart" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;"
+              data-select2-id="17" tabindex="-1" aria-hidden="true">
+              <option selected="selected" data-select2-id="19" value="101">计算机</option>
+              <option data-select2-id="35" value="102">金融</option>
+            </select>
+          </div>
+
+          <div class="input-group mb-3">
+            <select name="studentGrade" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;"
+              data-select2-id="17" tabindex="-1" aria-hidden="true">
+              <option selected="selected" data-select2-id="19" value="1">大一</option>
+              <option data-select2-id="35" value="2">大二</option>
+              <option data-select2-id="37" value="3">大三</option>
+              <option data-select2-id="38" value="4">大四</option>
+
+            </select>
+          </div>
+
+        </form>
+
+        <!-- 老师 -->
+        <form method="post" class="teacher" id="teacherForm">
+          <div class="input-group mb-3">
+            <input name="teacherName" type="text" class="form-control" placeholder="姓名" id="teacherName">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input name="teacherId" type="text" class="form-control" placeholder="请输入6位教师号" id="teacherId">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input name="teacherPwd" type="password" class="form-control" placeholder="密码" id="teacherPwd">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="重新输入密码" id="teacherPwdRe">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+        <div class="row">
+          <div class="col-8">
+            <a th:href="@{/login}" class="text-center">返回登陆</a>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="button" class="btn btn-primary btn-block" id="buttonSubmit">注册</button>
+          </div>
+          <!-- /.col -->
+        </div>
+
+      </div>
+      <!-- /.form-box -->
+    </div><!-- /.card -->
+  </div>
+  <!-- /.register-box -->
+
+  <!-- jQuery -->
+  <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+  <!-- Bootstrap 4 -->
+  <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <!-- AdminLTE App -->
+  <script th:src="@{/dist/js/adminlte.min.js}"></script>
+  <!--  SweetAlert-->
+  <script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
+  <script th:src="@{/dist/js/register.js}"></script>
+  <script th:src="@{/dist/js/public.js}"></script>
+
+</body>
+
+</html>

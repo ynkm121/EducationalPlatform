@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="teacher/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <header th:replace="teacher/header::header-nav"></header>
+
+  <header th:replace="teacher/sidebar::sidebar-fragment(${path})"></header>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <h1 class="m-0">首页</h1>
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="card-header">
+          <h3 class="card-title">信息一览</h3>
+        </div> <!-- /.card-body -->
+        <div class="row">
+          <div class="col-12 col-sm-4">
+            <div class="info-box bg-light">
+              <div class="info-box-content">
+                <span class="info-box-text text-center text-muted">我的课程</span>
+                <span class="info-box-number text-center text-muted mb-0" th:text="${courseCount}">0</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-4">
+            <div class="info-box bg-light">
+              <div class="info-box-content">
+                <span class="info-box-text text-center text-muted">待办事项</span>
+                <span class="info-box-number text-center text-muted mb-0">2</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-4">
+            <div class="info-box bg-light">
+              <div class="info-box-content">
+                <span class="info-box-text text-center text-muted">新增消息</span>
+                <span class="info-box-number text-center text-muted mb-0">13</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.container-fluid -->
+      <div class="card-header">
+        <h3 class="card-title">我的课程</h3>
+      </div> <!-- /.card-body -->
+      <div class="row" >
+        <div class="col-md-3 col-sm-6 col-12 mt-3" th:each="course:${courses}">
+          <div class="info-box shadow" th:onclick="|toCourseware(${course.getCourseId()})|">
+            <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text" th:text="${course.getCourseName()}">高等数学(III)</span>
+              <span class="info-box-number" th:text="${course.getIntro()}">必修</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+      </div>
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <div class="p-3">
+      <h5>Title</h5>
+      <p>Sidebar content</p>
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      Anything you want
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<script th:src="@{/dist/js/teacher/course.js}"></script>
+</body>
+</html>

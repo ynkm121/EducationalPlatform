@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="student/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <header th:replace="student/header::header-nav"></header>
+
+    <header th:replace="student/sidebar::sidebar-fragment(${path})"></header>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <h1 class="m-0">可选课程列表</h1>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- Main content -->
+        <section class="content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">我的已选课</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="grid-btn">
+                        <button class="btn btn-success" style="margin-top: 10px;margin-bottom: 10px;" onclick="toUnchecked()"><i
+                                class="fa fa-plus"></i>&nbsp;选课
+                        </button>
+                    </div>
+                    <!-- JqGrid必要DOM,用于创建表格展示列表数据 -->
+                    <table id="jqGrid" class="table table-bordered"></table>
+                    <!-- JqGrid必要DOM,分页信息区域 -->
+                    <div id="jqGridPager"></div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </section>
+    </div>
+    <h1>你好</h1>
+</div>
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<!-- SweetAlert2-->
+<script th:src="@{/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- jqgrid -->
+<script th:src="@{/plugins/jqgrid-5.3.0/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/plugins/jqgrid-5.3.0/grid.locale-cn.js}"></script>
+<script th:src="@{/dist/js/public.js}"></script>
+<script th:src="@{/dist/js/student/unchecked.js}"></script>
+</body>
+</html>
