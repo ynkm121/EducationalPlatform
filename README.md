@@ -12,5 +12,6 @@
 # 技术栈
 - 基本结构：Springboot + Mybatis + Thymeleaf
 - 前端交互thymeleaf，美化使用基于bootstrap的模板[AdminLTE](https://github.com/ColorlibHQ/AdminLTE)
+- 使用websocket实现教师信息能即时对在线学生弹窗
 - 认证授权使用shiro，对三种角色通过不同realm验证，并将结果缓存于redis，提高授权响应速度
 - 后台使用Springboot连接Mysql完成数据验证及存储
